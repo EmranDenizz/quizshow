@@ -5,6 +5,8 @@ void main() {
 }
 
 class QuizShow extends StatelessWidget {
+  const QuizShow({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,7 +15,7 @@ class QuizShow extends StatelessWidget {
         backgroundColor: Color(0xffE0F7FA),
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: 40),
             child: QuestionPage(),
           ),
         ),
@@ -37,7 +39,7 @@ class _QuestionPageState extends State<QuestionPage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Expanded(
-          flex: 4,
+          flex: 3,
           child: Padding(
             padding: EdgeInsets.all(10),
             child: Text(
@@ -49,7 +51,49 @@ class _QuestionPageState extends State<QuestionPage> {
               ),
             ),
           ),
-        )
+        ),
+        Expanded(
+          flex: 1,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 4),
+                    child: TextButton(
+                      child: Padding(
+                        padding: EdgeInsets.all(2),
+                        child: Icon(
+                          Icons.thumb_up,
+                          color: Colors.green,
+                          size: 35,
+                        ),
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 4),
+                    child: TextButton(
+                      child: Padding(
+                        padding: EdgeInsets.all(4),
+                        child: Icon(
+                          Icons.thumb_down,
+                          size: 35,
+                          color: Colors.red,
+                        ),
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
