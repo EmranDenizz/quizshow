@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizshow/constants.dart';
 
 void main() {
   runApp(QuizShow());
@@ -15,7 +16,7 @@ class QuizShow extends StatelessWidget {
         backgroundColor: Color(0xffE0F7FA),
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40),
+            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
             child: QuestionPage(),
           ),
         ),
@@ -32,6 +33,8 @@ class QuestionPage extends StatefulWidget {
 }
 
 class _QuestionPageState extends State<QuestionPage> {
+  List<Widget> secimler = [];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -57,6 +60,15 @@ class _QuestionPageState extends State<QuestionPage> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 8),
             child: Row(
+              children: secimler,
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
               children: <Widget>[
                 Expanded(
                   child: Padding(
@@ -70,7 +82,11 @@ class _QuestionPageState extends State<QuestionPage> {
                           size: 35,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          secimler.add(kDogruIconu);
+                        });
+                      },
                     ),
                   ),
                 ),
@@ -86,7 +102,11 @@ class _QuestionPageState extends State<QuestionPage> {
                           color: Colors.red,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          secimler.add(kYanlisIconu);
+                        });
+                      },
                     ),
                   ),
                 )
