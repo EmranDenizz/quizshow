@@ -55,14 +55,10 @@ class _QuestionPageState extends State<QuestionPage> {
             ),
           ),
         ),
-        Expanded(
-          flex: 1,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: Row(
-              children: secimler,
-            ),
-          ),
+        Wrap(
+          spacing: 15, //yatayda boşluk verir.
+          runSpacing: 15, // dikeyde boşluk verir
+          children: secimler,
         ),
         Expanded(
           flex: 1,
