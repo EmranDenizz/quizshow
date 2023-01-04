@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizshow/constants.dart';
+import 'package:quizshow/soruBankasi.dart';
 
 void main() {
   runApp(QuizShow());
@@ -33,14 +34,8 @@ class QuestionPage extends StatefulWidget {
 }
 
 class _QuestionPageState extends State<QuestionPage> {
-  int soruSayac = 0;
-  List<Widget> secimler = [];
-  List<Soru> soruBankasi = [
-    Soru(soruMetni: 'Deniz atlarının erkeği doğurur', soruYanit: true),
-    Soru(soruMetni: 'Cristiano Ronalda Portekizlidir.', soruYanit: true),
-    Soru(soruMetni: 'İstanbul Türkiye^nin başkentidir.', soruYanit: false),
-    Soru(soruMetni: 'Asya bir ülkedir.', soruYanit: false)
-  ];
+  List<Widget> secimler = []; //ikonları tutacak olan boş listemiz
+  Sorular sorular = Sorular(); //Soruları tutan sınıfımız
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +49,7 @@ class _QuestionPageState extends State<QuestionPage> {
             padding: EdgeInsets.all(10),
             child: Center(
               child: Text(
-                soruBankasi[soruSayac].soruMetni,
+                sorular.getSoruMetniDondur(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25,
@@ -89,11 +84,11 @@ class _QuestionPageState extends State<QuestionPage> {
                       ),
                       onPressed: () {
                         setState(() {
-                          soruBankasi[soruSayac].soruYanit ==
+                          sorular.getSoruYanitDondur() ==
                                   true //ternary operatör
                               ? secimler.add(kDogruIconu)
                               : secimler.add(kYanlisIconu);
-                          soruSayac++;
+                          sorular.sonrakiSoru();
                         });
                       },
                     ),
@@ -112,14 +107,14 @@ class _QuestionPageState extends State<QuestionPage> {
                         ),
                       ),
                       onPressed: () {
-                        bool dogruButonu = soruBankasi[soruSayac].soruYanit;
+                        bool dogruButonu = sorular.getSoruYanitDondur();
                         setState(() {
-                          if (dogruButonu == true) {
-                            secimler.add(kDogruIconu);
+                          if (dogruButonu == false) {
+                            secimler.add(kYanlisIconu);
                           } else {
                             secimler.add(kYanlisIconu);
                           }
-                          soruSayac++;
+                          sorular.sonrakiSoru();
                         });
                       },
                     ),
@@ -132,11 +127,4 @@ class _QuestionPageState extends State<QuestionPage> {
       ],
     );
   }
-}
-
-class Soru {
-  String soruMetni;
-  bool soruYanit;
-
-  Soru({required this.soruMetni, required this.soruYanit});
 }
