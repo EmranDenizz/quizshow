@@ -33,7 +33,14 @@ class QuestionPage extends StatefulWidget {
 }
 
 class _QuestionPageState extends State<QuestionPage> {
+  int soruSayac = 0;
   List<Widget> secimler = [];
+  List<Soru> soruBankasi = [
+    Soru(soruMetni: 'Deniz atlarının erkeği doğurur', soruYanit: true),
+    Soru(soruMetni: 'Cristiano Ronalda Portekizlidir.', soruYanit: true),
+    Soru(soruMetni: 'İstanbul Türkiye^nin başkentidir.', soruYanit: false),
+    Soru(soruMetni: 'Asya bir ülkedir.', soruYanit: false)
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +52,14 @@ class _QuestionPageState extends State<QuestionPage> {
           flex: 3,
           child: Padding(
             padding: EdgeInsets.all(10),
-            child: Text(
-              'Yarışma Soruları',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 25,
-                color: Colors.black,
+            child: Center(
+              child: Text(
+                soruBankasi[soruSayac].soruMetni,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.black,
+                ),
               ),
             ),
           ),
@@ -80,7 +89,11 @@ class _QuestionPageState extends State<QuestionPage> {
                       ),
                       onPressed: () {
                         setState(() {
-                          secimler.add(kDogruIconu);
+                          soruBankasi[soruSayac].soruYanit ==
+                                  true //ternary operatör
+                              ? secimler.add(kDogruIconu)
+                              : secimler.add(kYanlisIconu);
+                          soruSayac++;
                         });
                       },
                     ),
@@ -99,8 +112,14 @@ class _QuestionPageState extends State<QuestionPage> {
                         ),
                       ),
                       onPressed: () {
+                        bool dogruButonu = soruBankasi[soruSayac].soruYanit;
                         setState(() {
-                          secimler.add(kYanlisIconu);
+                          if (dogruButonu == true) {
+                            secimler.add(kDogruIconu);
+                          } else {
+                            secimler.add(kYanlisIconu);
+                          }
+                          soruSayac++;
                         });
                       },
                     ),
@@ -113,4 +132,11 @@ class _QuestionPageState extends State<QuestionPage> {
       ],
     );
   }
+}
+
+class Soru {
+  String soruMetni;
+  bool soruYanit;
+
+  Soru({required this.soruMetni, required this.soruYanit});
 }
