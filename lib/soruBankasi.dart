@@ -26,4 +26,16 @@ class Sorular {
       _soruSayac++;
     }
   }
+
+  bool sorularBittiMi() {
+    if (_soruSayac + 1 >= _soruBankasi.length) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void soruSayacSifirla() {
+    _soruSayac = 0;
+  }
 }

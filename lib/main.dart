@@ -37,6 +37,42 @@ class _QuestionPageState extends State<QuestionPage> {
   List<Widget> secimler = []; //ikonları tutacak olan boş listemiz
   Sorular sorular = Sorular(); //Soruları tutan sınıfımız
 
+  void butonFonkiyonu(bool secilenButon) {
+    if (sorular.sorularBittiMi() == true) {
+      //alertDialog gösterecek.Sonra index(dizi) sıfırla.
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Sorular Bitti. Tebrikler..."),
+            //content: new Text("Alert Dialog body"),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              new TextButton(
+                child: new Text("Kapat"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {
+                    sorular.soruSayacSifirla();
+                    secimler = [];
+                  });
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      setState(() {
+        sorular.getSoruYanitDondur() == secilenButon //ternary operatör
+            ? secimler.add(kDogruIconu)
+            : secimler.add(kYanlisIconu);
+        sorular.sonrakiSoru();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -83,13 +119,7 @@ class _QuestionPageState extends State<QuestionPage> {
                         ),
                       ),
                       onPressed: () {
-                        setState(() {
-                          sorular.getSoruYanitDondur() ==
-                                  true //ternary operatör
-                              ? secimler.add(kDogruIconu)
-                              : secimler.add(kYanlisIconu);
-                          sorular.sonrakiSoru();
-                        });
+                        butonFonkiyonu(true);
                       },
                     ),
                   ),
@@ -107,15 +137,7 @@ class _QuestionPageState extends State<QuestionPage> {
                         ),
                       ),
                       onPressed: () {
-                        bool dogruButonu = sorular.getSoruYanitDondur();
-                        setState(() {
-                          if (dogruButonu == false) {
-                            secimler.add(kYanlisIconu);
-                          } else {
-                            secimler.add(kYanlisIconu);
-                          }
-                          sorular.sonrakiSoru();
-                        });
+                        butonFonkiyonu(true);
                       },
                     ),
                   ),
